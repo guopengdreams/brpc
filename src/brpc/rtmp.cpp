@@ -1749,7 +1749,7 @@ void RtmpClientStream::OnFailedToCreateStream() {
 
 void RtmpClientStream::DestroyStreamUserData(SocketUniquePtr& sending_sock,
                                              Controller* cntl,
-                                             int error_code,
+                                             int /*error_code*/,
                                              bool end_of_rpc) {
     if (!end_of_rpc) {
         if (sending_sock) {
@@ -1761,7 +1761,7 @@ void RtmpClientStream::DestroyStreamUserData(SocketUniquePtr& sending_sock,
             }
         }
     } else {
-        // Always move sending_sock into _rtmpsock.
+        // Always move sending_sock into _rtmpsock at the end of rpc.
         // - If the RPC is successful, moving sending_sock prevents it from
         //   setfailed in Controller after calling this method.
         // - If the RPC is failed, OnStopInternal() can clean up the socket_map
